@@ -35,7 +35,7 @@ public class Phone implements Serializable {
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
-    @NotEmpty
+	@Column(nullable = false)
 	private PhoneType phoneType;
 	
 	@NotEmpty

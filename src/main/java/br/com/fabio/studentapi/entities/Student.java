@@ -44,7 +44,7 @@ public class Student implements Serializable{
 	@Column(unique = true)
 	private String cpf;
 	
-	@NotEmpty
+	
 	private LocalDate birthDate;
 	
 	@NotEmpty

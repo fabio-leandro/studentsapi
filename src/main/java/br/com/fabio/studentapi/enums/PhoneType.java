@@ -4,7 +4,7 @@ public enum PhoneType {
 	
 	HOME("HOME"), COMMERCIAL("COMMERCIAL"), MOBILE("MOBILE");
 	
-	private String type;
+	private final String type;
 	
 	private PhoneType(String type) {
 		this.type = type;

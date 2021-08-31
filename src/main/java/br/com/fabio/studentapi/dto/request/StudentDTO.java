@@ -1,20 +1,24 @@
 package br.com.fabio.studentapi.dto.request;
 
-import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.fabio.studentapi.entities.Phone;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class StudentDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	
 	private Long id;
 	
 	@NotEmpty
@@ -24,8 +28,8 @@ public class StudentDTO {
 	@NotEmpty
 	private String cpf;
 	
-	@NotEmpty
-	private LocalDate birthDate;
+	@NotNull
+	private String birthDate;
 	
 	@NotEmpty
 	private List<Phone> phones;

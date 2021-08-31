@@ -21,7 +21,6 @@ public class PhoneDTO {
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
-    @NotEmpty
 	private PhoneType phoneType;
 	
 	@NotEmpty
