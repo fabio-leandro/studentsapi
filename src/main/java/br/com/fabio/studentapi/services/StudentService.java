@@ -48,9 +48,34 @@ public class StudentService {
 		return studentMapper.toDTO(student);
 	}
 	
+	public void delete(Long id) throws StudentNotFoundException{
+		studentRepository.findById(id)
+		.orElseThrow(() -> new StudentNotFoundException(id));
+		studentRepository.deleteById(id);
+		
+	}
+	
+	public MessageResponseDTO update(Long id, StudentDTO studentDTO) throws StudentNotFoundException {
+		
+		studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+		
+		Student student = studentMapper.toModel(studentDTO);
+		Student salvedStudent = studentRepository.save(student);
+		
+		MessageResponseDTO messageResponse = 
+				createMessageResponseDTO("Student successfully updated with ID ", salvedStudent.getId());
+		
+		return messageResponse;
+		
+	}
+	
+	
+	
 	private MessageResponseDTO createMessageResponseDTO(String s, Long id2){
 		return MessageResponseDTO.builder().message(s+id2).build();
 	}
+
+	
 
 	
 
