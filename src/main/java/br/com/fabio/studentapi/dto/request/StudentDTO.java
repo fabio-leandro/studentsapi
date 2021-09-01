@@ -26,6 +26,7 @@ public class StudentDTO {
 	private String name;
 	
 	@NotEmpty
+	@Size(min = 11, max = 11, message = "O CPF deve conter 11  digitos sem caracteres especiais.")
 	private String cpf;
 	
 	@NotNull
