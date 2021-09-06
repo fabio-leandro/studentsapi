@@ -1,4 +1,4 @@
-package br.com.fabio.studentapi.controllers;
+package br.com.fabio.studentapi.controllers.exceptions;
 
 import java.time.Instant;
 

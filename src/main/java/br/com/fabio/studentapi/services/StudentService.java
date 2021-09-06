@@ -2,15 +2,14 @@ package br.com.fabio.studentapi.services;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.fabio.studentapi.dto.mapper.StudentMapper;
-import br.com.fabio.studentapi.dto.request.StudentDTO;
-import br.com.fabio.studentapi.dto.response.MessageResponseDTO;
+import br.com.fabio.studentapi.dtos.mapper.StudentMapper;
+import br.com.fabio.studentapi.dtos.request.StudentDTO;
+import br.com.fabio.studentapi.dtos.response.MessageResponseDTO;
 import br.com.fabio.studentapi.entities.Student;
 import br.com.fabio.studentapi.exceptions.StudentNotFoundException;
 import br.com.fabio.studentapi.repositories.StudentRepository;
@@ -71,7 +70,7 @@ public class StudentService {
 	
 	
 	
-	private MessageResponseDTO createMessageResponseDTO(String s, Long id2){
+	public MessageResponseDTO createMessageResponseDTO(String s, Long id2){
 		return MessageResponseDTO.builder().message(s+id2).build();
 	}
 

@@ -1,9 +1,9 @@
-package br.com.fabio.studentapi.dto.mapper;
+package br.com.fabio.studentapi.dtos.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import br.com.fabio.studentapi.dto.request.StudentDTO;
+import br.com.fabio.studentapi.dtos.request.StudentDTO;
 import br.com.fabio.studentapi.entities.Student;
 
 

@@ -1,4 +1,4 @@
-package br.com.fabio.studentapi.dto.request;
+package br.com.fabio.studentapi.dtos.request;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

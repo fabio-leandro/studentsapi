@@ -1,4 +1,4 @@
-package br.com.fabio.studentapi.dto.response;
+package br.com.fabio.studentapi.dtos.response;
 
 import lombok.Builder;
 import lombok.Data;

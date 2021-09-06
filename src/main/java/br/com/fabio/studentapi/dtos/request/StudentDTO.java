@@ -1,4 +1,4 @@
-package br.com.fabio.studentapi.dto.request;
+package br.com.fabio.studentapi.dtos.request;
 
 import java.util.List;
 
@@ -33,6 +33,6 @@ public class StudentDTO {
 	private String birthDate;
 	
 	@NotEmpty
-	private List<Phone> phones;
+	private List<PhoneDTO> phones;
 
 }

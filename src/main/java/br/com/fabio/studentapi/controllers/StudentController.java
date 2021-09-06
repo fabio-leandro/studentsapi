@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.fabio.studentapi.dto.request.StudentDTO;
-import br.com.fabio.studentapi.dto.response.MessageResponseDTO;
+import br.com.fabio.studentapi.dtos.request.StudentDTO;
+import br.com.fabio.studentapi.dtos.response.MessageResponseDTO;
 import br.com.fabio.studentapi.exceptions.StudentNotFoundException;
 import br.com.fabio.studentapi.services.StudentService;
 
