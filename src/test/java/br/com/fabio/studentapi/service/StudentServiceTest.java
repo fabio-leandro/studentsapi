@@ -1,16 +1,18 @@
 package br.com.fabio.studentapi.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,44 +24,134 @@ import br.com.fabio.studentapi.dtos.mapper.StudentMapper;
 import br.com.fabio.studentapi.dtos.request.StudentDTO;
 import br.com.fabio.studentapi.dtos.response.MessageResponseDTO;
 import br.com.fabio.studentapi.entities.Student;
+import br.com.fabio.studentapi.exceptions.StudentNotFoundException;
 import br.com.fabio.studentapi.repositories.StudentRepository;
 import br.com.fabio.studentapi.services.StudentService;
 
 @ExtendWith(MockitoExtension.class)
 public class StudentServiceTest {
-	
+
 	@Mock
 	private StudentRepository studentRepository;
-	
-	@Mock
-	private StudentMapper studentMapper;
-	
-	
+
+	private StudentMapper studentMapper = StudentMapper.INSTANCE;
+
 	@InjectMocks
 	private StudentService studentService;
-	
+
 	@Test
-    void whenStudentInformedThenItShouldBeCreatedAndReturnSucessWithId() {
+	void whenStudentInformedThenItShouldBeCreated() {
+
 		// given
-	    StudentDTO expectedStudentDTO = StudentDTOBuilder.builder().build().toStudentDTO();
-	    Student expectedSavedStudent = studentMapper.toModel(expectedStudentDTO);
+		StudentDTO expectedStudentDTO = StudentDTOBuilder.builder().build().toStudentDTO();
+		Student expectedStudent = studentMapper.toModel(expectedStudentDTO);
+		MessageResponseDTO expectedMessageResponseDTO = studentService
+				.createMessageResponseDTO("Student successfully created with ID ", expectedStudent.getId());
 
-	    // when
-	    when(studentRepository.save(expectedSavedStudent)).thenReturn(expectedSavedStudent);
+		// When
+		when(studentRepository.save(expectedStudent)).thenReturn(expectedStudent);
 
-	    //then
-	    MessageResponseDTO messageStudentExpected = 
-	    		studentService.createMessageResponseDTO("Sucess", expectedStudentDTO.getId());
-	     
-	    MessageResponseDTO messageStudentSaved =
-	    		studentService.createMessageResponseDTO("Sucess ", expectedSavedStudent.getId());
-	    
-	    assertThat(messageStudentSaved, is(equalTo(messageStudentExpected)));
-	    
-		
+		// then
+		MessageResponseDTO messageResponseCreated = studentService.create(expectedStudentDTO);
+
+		MatcherAssert.assertThat(expectedMessageResponseDTO.getMessage(),
+				is(equalTo(messageResponseCreated.getMessage())));
+
 	}
-	
-	
 
+	@Test
+	void whenCalledItShouldReturnedOneListOfStudents() {
+
+		// given
+		StudentDTO expectedStudentDTO = StudentDTOBuilder.builder().build().toStudentDTO();
+		Student expectedStudent = studentMapper.toModel(expectedStudentDTO);
+
+		List<Student> expectedStudents = new ArrayList<>();
+		expectedStudents.add(expectedStudent);
+
+		// When
+		when(studentRepository.findAll()).thenReturn(expectedStudents);
+
+		// then
+		List<StudentDTO> expectedStudentsDtos = studentService.listAll();
+		expectedStudentsDtos.add(expectedStudentDTO);
+
+		MatcherAssert.assertThat(expectedStudents.get(0).getId(), is(equalTo(expectedStudentsDtos.get(0).getId())));
+
+	}
+
+	@Test
+	void whenStudentIdInformedItShouldThrowsStudentNotFoundException() {
+
+		// given
+		StudentDTO expectedStudent = StudentDTOBuilder.builder().build().toStudentDTO();
+
+		// when
+		when(studentRepository.findById(expectedStudent.getId())).thenReturn(Optional.empty());
+
+		// then
+		assertThrows(StudentNotFoundException.class, () -> studentService.findById(expectedStudent.getId()));
+
+	}
+
+	@Test
+	void whenStudentIdInformedItShouldReturnedStudentWithThisId() throws StudentNotFoundException {
+
+		// given
+		StudentDTO expectedStudentDTO = StudentDTOBuilder.builder().build().toStudentDTO();
+		Student expectedStudent = studentMapper.toModel(expectedStudentDTO);
+
+		// when
+		when(studentRepository.findById(expectedStudent.getId())).thenReturn(Optional.of(expectedStudent));
+
+		// then
+
+		StudentDTO studentFoundDTO = studentService.findById(expectedStudent.getId());
+
+		MatcherAssert.assertThat(studentFoundDTO, is(equalTo(expectedStudentDTO)));
+
+	}
+
+	@Test
+	void whenStudentIdInformedItShouldBeDeleteStudent() throws StudentNotFoundException {
+
+		// given
+		StudentDTO expectedStudentDTO = StudentDTOBuilder.builder().build().toStudentDTO();
+		Student expectedStudent = studentMapper.toModel(expectedStudentDTO);
+
+		// when
+		when(studentRepository.findById(expectedStudentDTO.getId())).thenReturn(Optional.of(expectedStudent));
+		doNothing().when(studentRepository).deleteById(expectedStudentDTO.getId());
+
+		// then
+		studentService.delete(expectedStudentDTO.getId());
+
+		verify(studentRepository, times(1)).findById(expectedStudentDTO.getId());
+		verify(studentRepository, times(1)).deleteById(expectedStudentDTO.getId());
+
+	}
+
+	@Test
+	void whenStudentIdInformedItShouldBeUpdateStudent() throws StudentNotFoundException {
+
+		// given
+		StudentDTO expectedStudentDTO = StudentDTOBuilder.builder().build().toStudentDTO();
+		Student expectedStudent = studentMapper.toModel(expectedStudentDTO);
+		MessageResponseDTO expectedMessageResponseDTO = studentService
+				.createMessageResponseDTO("Student successfully updated with ID ", expectedStudent.getId());
+
+		// when
+		when(studentRepository.findById(expectedStudent.getId())).thenReturn(Optional.of(expectedStudent));
+		when(studentRepository.save(expectedStudent)).thenReturn(expectedStudent);
+
+		// then
+
+		MessageResponseDTO messageResponseCreated = studentService.update(expectedStudentDTO.getId(),
+				expectedStudentDTO);
+
+		MatcherAssert.assertThat(expectedMessageResponseDTO.getMessage(),
+				is(equalTo(messageResponseCreated.getMessage())));
+
+	}
 
 }

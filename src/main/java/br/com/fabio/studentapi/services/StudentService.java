@@ -22,7 +22,7 @@ public class StudentService {
 	
 	private final StudentRepository studentRepository;
 	
-	private final StudentMapper studentMapper;
+	private final StudentMapper studentMapper = StudentMapper.INSTANCE;
 	
 	public MessageResponseDTO create(StudentDTO studentDTO) {
 		Student student = studentMapper.toModel(studentDTO);

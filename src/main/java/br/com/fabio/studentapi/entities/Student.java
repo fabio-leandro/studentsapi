@@ -45,11 +45,11 @@ public class Student implements Serializable{
 	private String cpf;
 	
 	
-	private LocalDate birthDate;
+	//private LocalDate birthDate;
 	
-	@NotEmpty
-	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	private List<Phone> phones = new ArrayList<>();
+//	@NotEmpty
+//	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+//	private List<Phone> phones = new ArrayList<>();
 	
 
 }

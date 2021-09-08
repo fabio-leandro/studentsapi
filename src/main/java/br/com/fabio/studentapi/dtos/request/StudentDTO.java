@@ -29,10 +29,13 @@ public class StudentDTO {
 	@Size(min = 11, max = 11, message = "O CPF deve conter 11  digitos sem caracteres especiais.")
 	private String cpf;
 	
-	@NotNull
-	private String birthDate;
+//	@NotNull
+//	private String birthDate;
 	
-	@NotEmpty
-	private List<PhoneDTO> phones;
+//	@NotEmpty
+//	private List<PhoneDTO> phones;
+//	
+	
+	
 
 }
