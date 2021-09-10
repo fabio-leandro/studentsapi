@@ -25,7 +25,7 @@ public class StudentDTOBuilder {
 	private String name = "Fabio";
 	
 	@Builder.Default
-	private String cpf = "55566677788";;
+	private String cpf = "55566677788";
 	
 	@Builder.Default
 	private LocalDate birthDate = LocalDate.of(1985, 12, 02);
