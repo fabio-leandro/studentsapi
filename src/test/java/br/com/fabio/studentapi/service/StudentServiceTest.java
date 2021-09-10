@@ -9,8 +9,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -84,8 +84,8 @@ public class StudentServiceTest {
 	void whenStudentIdInformedItShouldThrowsStudentNotFoundException() {
 
 		// given
-		StudentDTO expectedStudent = StudentDTOBuilder.builder().build().toStudentDTO();
-
+		StudentDTO expectedStudentDTO = StudentDTOBuilder.builder().build().toStudentDTO();
+		Student expectedStudent = studentMapper.toModel(expectedStudentDTO);
 		// when
 		when(studentRepository.findById(expectedStudent.getId())).thenReturn(Optional.empty());
 
@@ -100,15 +100,20 @@ public class StudentServiceTest {
 		// given
 		StudentDTO expectedStudentDTO = StudentDTOBuilder.builder().build().toStudentDTO();
 		Student expectedStudent = studentMapper.toModel(expectedStudentDTO);
-
+		
 		// when
-		when(studentRepository.findById(expectedStudent.getId())).thenReturn(Optional.of(expectedStudent));
-
+		when(studentRepository.findById(expectedStudent.getId()))
+		.thenReturn(Optional.of(expectedStudent));
+		
 		// then
-
+		
 		StudentDTO studentFoundDTO = studentService.findById(expectedStudent.getId());
-
+		
+		
 		MatcherAssert.assertThat(studentFoundDTO, is(equalTo(expectedStudentDTO)));
+		
+		
+		
 
 	}
 

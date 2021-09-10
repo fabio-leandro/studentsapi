@@ -1,5 +1,6 @@
 package br.com.fabio.studentapi.dtos.request;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
@@ -29,12 +30,12 @@ public class StudentDTO {
 	@Size(min = 11, max = 11, message = "O CPF deve conter 11  digitos sem caracteres especiais.")
 	private String cpf;
 	
-//	@NotNull
-//	private String birthDate;
+	@NotNull
+	private LocalDate birthDate;
 	
-//	@NotEmpty
-//	private List<PhoneDTO> phones;
-//	
+	@NotEmpty
+	private List<PhoneDTO> phones;
+	
 	
 	
 

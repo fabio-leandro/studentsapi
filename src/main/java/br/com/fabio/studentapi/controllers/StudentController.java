@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import br.com.fabio.studentapi.dtos.request.StudentDTO;
 import br.com.fabio.studentapi.dtos.response.MessageResponseDTO;
 import br.com.fabio.studentapi.exceptions.StudentNotFoundException;
@@ -58,5 +59,6 @@ public class StudentController {
 	public MessageResponseDTO update (@PathVariable Long id, @RequestBody @Valid StudentDTO studentDTO) throws StudentNotFoundException {
 		return studentService.update(id, studentDTO);
 	}
+	
 
 }
