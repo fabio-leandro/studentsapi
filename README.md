@@ -10,6 +10,10 @@ Ferramentas:
 Java, Spring Boot, Postgres, Spring Tool Suíte 4.
 
 
+link no heroku: https://students-management-api.herokuapp.com/api/v1/students
+
+
+
 
 
 
